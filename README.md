@@ -54,6 +54,20 @@ Implements a full **multi-agent system** with a manager and a subordinate web ag
 
 ---
 
+### 📁 `LangGraph/`
+
+Experiments using the [LangGraph](https://github.com/langchain-ai/langgraph) framework by LangChain.
+
+#### `buildingBlocks.ipynb`
+Introduces the **fundamental building blocks** of LangGraph. Demonstrates:
+- Defining graph state with `TypedDict` (a simple `graph_state: str` schema)
+- Creating nodes (`node_1`, `node_2`, `node_3`) that read and update the shared state
+- Writing a **conditional edge** function (`decide_mood`) that randomly routes execution to one of two branches
+- Building and compiling a `StateGraph` with `START` → `node_1` → conditional branch → `END`
+- Visualising the compiled graph with Mermaid and invoking it end-to-end
+
+---
+
 ## Notes
 - All notebooks use Python 3.13 with an `agents` conda environment.
 - Models are served via the Hugging Face Inference API or third-party providers (Together AI, OpenAI).
