@@ -54,6 +54,26 @@ Implements a full **multi-agent system** with a manager and a subordinate web ag
 
 ---
 
+### 📁 `AgenticRag/`
+
+A modular **Agentic RAG (Retrieval-Augmented Generation)** pipeline built with LangGraph and BM25 retrieval. The agent answers questions about gala guests by retrieving structured guest profiles from a HuggingFace dataset and reasoning over them in a ReAct loop.
+
+#### `dataset.py`
+Loads the guest invite list from the HuggingFace `agents-course/unit3-invitees` dataset and converts each entry into a LangChain `Document` with fields for name, relation, description, and email.
+
+#### `reteriever.py`
+Creates a **BM25Retriever** over the guest documents and wraps it in a LangChain `Tool` (`guest_info_retriever`) that accepts a query and returns the top 3 matching guest profiles.
+
+#### `app.py`
+Wires everything into a **LangGraph ReAct agent**. Key components:
+- `ChatHuggingFace` backed by `Qwen2.5-Coder-32B-Instruct` with the `guest_info_retriever` tool bound
+- An `AgentState` with message history and an `assistant` node that invokes the LLM
+- A `ToolNode` for tool execution and `tools_condition` for conditional routing
+- End-to-end graph: `START` → `assistant` ↔ `tools` → response
+- Example query: retrieving information about the guest "Lady Ada Lovelace"
+
+---
+
 ### 📁 `LangGraph/`
 
 Experiments using the [LangGraph](https://github.com/langchain-ai/langgraph) framework by LangChain.
