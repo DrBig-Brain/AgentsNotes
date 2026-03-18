@@ -66,6 +66,22 @@ Introduces the **fundamental building blocks** of LangGraph. Demonstrates:
 - Building and compiling a `StateGraph` with `START` → `node_1` → conditional branch → `END`
 - Visualising the compiled graph with Mermaid and invoking it end-to-end
 
+#### `mailClassificationGraph.ipynb`
+Builds an **email classification and response pipeline** using LangGraph and `ChatOpenAI`. Defines an `EmailState` schema to track email metadata, spam status, category, and draft responses. Demonstrates:
+- Creating nodes for each processing step: `read_email`, `classify_email`, `handle_spam`, `draft_response`, and `notify_mr_hugg`
+- Using an LLM to classify incoming emails as spam or legitimate and categorise them (inquiry, complaint, thank you, etc.)
+- Implementing a **conditional edge** (`route_email`) that routes spam to a discard handler and legitimate emails to a draft-response generator
+- End-to-end graph: `START` → `read_email` → `classify_email` → spam/legitimate branch → `END`
+
+#### `documentAnalysisGraph.ipynb`
+Builds a **ReAct-style document analysis agent** using LangGraph's prebuilt `ToolNode` and `tools_condition`. Defines an `AgentState` with message history and an optional image file path. Demonstrates:
+- A multimodal `extract_text` tool that encodes an image as base64 and sends it to `gpt-4o` for OCR-style text extraction
+- A simple `divide` tool for arithmetic computations
+- Binding tools to a `ChatOpenAI` model with `parallel_tool_calls=False` for sequential reasoning
+- An `assistant` node that injects a system prompt (Alfred the butler persona) along with tool descriptions and the current image path
+- Building a **ReAct loop**: `START` → `assistant` ↔ `tools` (conditional via `tools_condition`) → `END`
+- Invoking the agent with both a pure computation task ("Divide 6790 by 5") and an image-based document analysis task
+
 ---
 
 ## Notes
